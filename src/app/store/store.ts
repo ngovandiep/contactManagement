@@ -3,14 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { contactSlice } from "../../features/contacts/contactSlice";
 import { testSlice } from "../../features/scratch/testSlice";
 import { modalSlice } from "../common/modals/modalSlice";
-import { authSlice } from "../../features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
     test: testSlice.reducer,
     contacts: contactSlice.reducer,
     modals: modalSlice.reducer,
-    auth: authSlice.reducer,
   },
 });
 

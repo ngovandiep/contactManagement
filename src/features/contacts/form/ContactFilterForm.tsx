@@ -32,7 +32,7 @@ export default function ContactFilterForm() {
 
   function onSubmit() {
     reset();
-    dispatch(clearFilter(""));
+    dispatch(clearFilter());
   }
 
   return (

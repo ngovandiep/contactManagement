@@ -110,7 +110,7 @@ export const contactSlice = createSlice({
           action.payload.length > 0 ? contactsFiltered : [...state.contacts],
       };
     },
-    clearFilter: (state, action) => {
+    clearFilter: (state) => {
       return {
         ...state,
         contactsFiltered: [...state.contacts],
