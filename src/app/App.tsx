@@ -1,9 +1,25 @@
+import { Outlet, useLocation } from "react-router-dom";
+import { Container } from "semantic-ui-react";
+import NavBar from "./layout/nav/NavBar";
+import Homepage from "../features/home/Homepage";
 
 function App() {
+  const location = useLocation();
 
   return (
-    <h1>Welcome to Revents</h1>
-  )
+    <>
+      {location.pathname === "/" ? (
+        <Homepage />
+      ) : (
+        <>
+          <NavBar />
+          <Container className="main">
+            <Outlet />
+          </Container>
+        </>
+      )}
+    </>
+  );
 }
 
-export default App
+export default App;
