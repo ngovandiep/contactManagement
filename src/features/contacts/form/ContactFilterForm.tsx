@@ -9,6 +9,7 @@ import {
   nameFilter,
   clearFilter,
   emailFilter,
+  addressFilter,
 } from "../contactSlice";
 import { groupOptions } from "./groupOptions";
 
@@ -87,6 +88,9 @@ export default function ContactFilterForm() {
           placeholder="Address"
           defaultValue={contact?.address || ""}
           {...register("address")}
+          onChange={(e) => {
+            dispatch(addressFilter(e.target.value));
+          }}
         />
 
         <Button
