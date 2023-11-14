@@ -3,15 +3,10 @@ import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
 import { useAppDispatch, useAppSelector } from "../../../app/store/store";
-import {
-  groupFilter,
-  phoneFilter,
-  nameFilter,
-  clearFilter,
-  emailFilter,
-  addressFilter,
-} from "../contactSlice";
+import { contactsFilter, clearFilter } from "../contactSlice";
 import { groupOptions } from "./groupOptions";
+import { useEffect } from "react";
+import { AppContact } from "../../../app/types/contact";
 
 export default function ContactFilterForm() {
   const {
@@ -19,11 +14,12 @@ export default function ContactFilterForm() {
     handleSubmit,
     control,
     setValue,
+    getValues,
     reset,
     formState: { isSubmitting },
   } = useForm();
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   const contact = useAppSelector((state) =>
     state.contacts.contacts.find((e) => e.id === id)
@@ -35,6 +31,17 @@ export default function ContactFilterForm() {
     dispatch(clearFilter());
   }
 
+  const values = getValues();
+  function handleFilter(e: any) {
+    dispatch(contactsFilter({ ...values, ...e }));
+  }
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearFilter());
+    };
+  }, []);
+
   return (
     <Segment clearing>
       <Header content="Contact details Filter" sub color="teal" />
@@ -44,7 +51,7 @@ export default function ContactFilterForm() {
           defaultValue={""}
           {...register("name")}
           onChange={(e) => {
-            dispatch(nameFilter(e.target.value));
+            handleFilter({ name: e.target.value });
           }}
         />
         <Controller
@@ -59,7 +66,7 @@ export default function ContactFilterForm() {
               {...field}
               onChange={(_, d) => {
                 setValue("group", d.value);
-                dispatch(groupFilter(d.value));
+                handleFilter({ group: d.value });
               }}
             />
           )}
@@ -70,7 +77,7 @@ export default function ContactFilterForm() {
           defaultValue={""}
           {...register("phone")}
           onChange={(e) => {
-            dispatch(phoneFilter(e.target.value));
+            handleFilter({ phone: e.target.value });
           }}
         />
 
@@ -79,7 +86,7 @@ export default function ContactFilterForm() {
           defaultValue={""}
           {...register("email")}
           onChange={(e) => {
-            dispatch(emailFilter(e.target.value));
+            handleFilter({ email: e.target.value });
           }}
         />
 
@@ -89,7 +96,7 @@ export default function ContactFilterForm() {
           defaultValue={contact?.address || ""}
           {...register("address")}
           onChange={(e) => {
-            dispatch(addressFilter(e.target.value));
+            handleFilter({ address: e.target.value });
           }}
         />
 

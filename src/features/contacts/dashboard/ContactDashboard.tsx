@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../app/store/store";
 import ContactFilterForm from "../form/ContactFilterForm";
 
 export default function ContactDashboard() {
-  const { contactsFiltered  } = useAppSelector((state) => state.contacts);
+  const { contactsFiltered } = useAppSelector((state) => state.contacts);
 
   return (
     <Grid>
